@@ -2,7 +2,7 @@
   "Actions": [
     {
       "Icon": "Images/icon",
-      "Name": "TODO_ENTER_NAME_OF_ACTION",
+      "Name": "Switch Drum Kit",
       "States": [
         {
           "Image": "Images/pluginAction",
@@ -11,19 +11,19 @@
         }
       ],
       "SupportedInMultiActions": false,
-      "Tooltip": "TODO_ENTER_TOOLTIP",
+      "Tooltip": "Switch your kit with a press of a button!",
       "UUID": "DrumKitSwitcher.pluginaction",
       "PropertyInspectorPath": "PropertyInspector/PluginActionPI.html"
     }
   ],
-  "Author": "TODO_ENTER_YOUR_NAME",
+  "Author": "Flewp",
   "Name": "DrumKitSwitcher",
-  "Description": "TODO_ENTER_PLUGIN_DESCRIPTION",
+  "Description": "Description.",
   "Icon": "Images/pluginIcon",
-  "URL": "TODO_ENTER_YOUR_HOMEPAGE",
+  "URL": "https://www.twitch.tv/flewp",
   "Version": "1.0",
-  "CodePath": "DrumKitSwitcher",
-  "Category": "Custom",
+  "CodePath": "com.DrumKitSwitcher.exe",
+  "Category": "Flewp",
   "CategoryIcon": "Images/categoryIcon",
   "OS": [
     {
