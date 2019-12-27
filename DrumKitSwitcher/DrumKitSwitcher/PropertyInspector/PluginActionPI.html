@@ -12,18 +12,13 @@
 </head>
 <body>
     <div class="sdpi-wrapper">
-        <div class="sdpi-item" id="dvOutputFileName">
-            <div class="sdpi-item-label">File Name:</div>
-            <input class="sdpi-item-value sdProperty" placeholder="c:\mycounter.txt" value="" id="outputFileName">
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">MIDI Device Name</div>
+            <input class="sdpi-item-value sdProperty" placeholder="TD-30" value="" id="midiDeviceName" oninput="setSettings()">
         </div>
-        <div class="sdpi-item" id="dvSave">
-            <div class="sdpi-item-label">Save File Name</div>
-            <button class="sdpi-item-value max20" onclick="setSettings()">Save</button>
-            <p>Click here after setting the file name</p>
-        </div>
-        <div class="sdpi-item" id="dvTitlePrefix">
-            <div class="sdpi-item-label">Input Text</div>
-            <input class="sdpi-item-value sdProperty" placeholder="" value="" id="inputString" oninput="setSettings()">
+		<div class="sdpi-item">
+            <div class="sdpi-item-label">Kit Number</div>
+            <input class="sdpi-item-value sdProperty" type="number" min="1" max="128" placeholder="1" value="" id="kitNumber" oninput="setSettings()">
         </div>
     </div>
 </body>
