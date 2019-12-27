@@ -1,4 +1,5 @@
 ﻿using BarRaider.SdTools;
+using NAudio.Midi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -18,17 +19,17 @@ namespace DrumKitSwitcher
             public static PluginSettings CreateDefaultSettings()
             {
                 PluginSettings instance = new PluginSettings();
-                instance.OutputFileName = String.Empty;
-                instance.InputString = String.Empty;
+                instance.MidiDeviceName = String.Empty;
+                instance.KitNumber = String.Empty;
+
                 return instance;
             }
 
-            [FilenameProperty]
-            [JsonProperty(PropertyName = "outputFileName")]
-            public string OutputFileName { get; set; }
+            [JsonProperty(PropertyName = "midiDeviceName")]
+            public string MidiDeviceName { get; set; }
 
-            [JsonProperty(PropertyName = "inputString")]
-            public string InputString { get; set; }
+            [JsonProperty(PropertyName = "kitNumber")]
+            public string KitNumber { get; set; }
         }
 
         #region Private Members
@@ -55,7 +56,41 @@ namespace DrumKitSwitcher
 
         public override void KeyPressed(KeyPayload payload)
         {
-            Logger.Instance.LogMessage(TracingLevel.INFO, "Key Pressed");
+            int kitNumber = 0;
+
+            if (this.settings == null || this.settings.MidiDeviceName == null || this.settings.KitNumber == null || this.settings.KitNumber.Length == 0)
+            {
+                Logger.Instance.LogMessage(TracingLevel.INFO, "Unable to set kit, no kit number or midi device set.");
+                return;
+            }
+
+            try
+            {
+                kitNumber = Int32.Parse(this.settings.KitNumber);
+            }
+            catch (FormatException)
+            {
+                Logger.Instance.LogMessage(TracingLevel.INFO, "kit number not parceable");
+                return;
+            }
+
+            bool messageSent = false;
+            for (int device = 0; device < MidiOut.NumberOfDevices; device++)
+            {
+                if (this.settings.MidiDeviceName.Equals(MidiOut.DeviceInfo(device).ProductName))
+                {
+                    MidiOut midiOut = new MidiOut(device);
+                    midiOut.Send(new PatchChangeEvent(0, 10, kitNumber - 1).GetAsShortMessage());
+                    midiOut.Dispose();
+                    Logger.Instance.LogMessage(TracingLevel.INFO, "Message Sent!");
+                    messageSent = true;
+                }
+            }
+
+            if (!messageSent)
+            {
+                Logger.Instance.LogMessage(TracingLevel.INFO, "Unable to send message, no device found.");
+            }
         }
 
         public override void KeyReleased(KeyPayload payload) { }
