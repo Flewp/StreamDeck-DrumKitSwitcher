@@ -30,6 +30,9 @@ namespace DrumKitSwitcher
 
             [JsonProperty(PropertyName = "kitNumber")]
             public string KitNumber { get; set; }
+
+            [JsonProperty(PropertyName = "availableMidiDevices")]
+            public string AvailableMidiDevices { get; set; }
         }
 
         #region Private Members
@@ -47,6 +50,8 @@ namespace DrumKitSwitcher
             {
                 this.settings = payload.Settings.ToObject<PluginSettings>();
             }
+
+            this.RefreshMIDIDevices();
         }
 
         public override void Dispose()
@@ -89,7 +94,8 @@ namespace DrumKitSwitcher
 
             if (!messageSent)
             {
-                Logger.Instance.LogMessage(TracingLevel.INFO, "Unable to send message, no device found.");
+                Logger.Instance.LogMessage(TracingLevel.INFO, "Unable to send message, no device found." +
+                    "There are " + MidiOut.NumberOfDevices + " devices.");
             }
         }
 
@@ -112,6 +118,24 @@ namespace DrumKitSwitcher
             return Connection.SetSettingsAsync(JObject.FromObject(settings));
         }
 
+        private void RefreshMIDIDevices()
+        {
+            String deviceNames = "";
+            if (MidiOut.NumberOfDevices == 0)
+            {
+                deviceNames = "No devices found.";
+            }
+            else
+            {
+                for (int device = 0; device < MidiOut.NumberOfDevices; device++)
+                {
+                    deviceNames += MidiOut.DeviceInfo(device).ProductName + ", ";
+                }
+            }
+
+            this.settings.AvailableMidiDevices = deviceNames;
+            this.SaveSettings();
+        }
         #endregion
     }
 }

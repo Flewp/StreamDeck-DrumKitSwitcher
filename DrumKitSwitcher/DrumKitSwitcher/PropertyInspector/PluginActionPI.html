@@ -14,11 +14,16 @@
     <div class="sdpi-wrapper">
         <div class="sdpi-item">
             <div class="sdpi-item-label">MIDI Device Name</div>
-            <input class="sdpi-item-value sdProperty" placeholder="TD-30" value="" id="midiDeviceName" oninput="setSettings()">
+            <input class="sdpi-item-value sdProperty" placeholder="TD-30" value="" id="midiDeviceName" oninput="setSettings()" required>
         </div>
 		<div class="sdpi-item">
             <div class="sdpi-item-label">Kit Number</div>
-            <input class="sdpi-item-value sdProperty" type="number" min="1" max="128" placeholder="1" value="" id="kitNumber" oninput="setSettings()">
+            <input class="sdpi-item-value sdProperty" type="number" min="1" max="128" placeholder="1" value="" id="kitNumber" oninput="setSettings()" required>
+        </div>
+		<div class="sdpi-heading">STATUS</div>
+		<div class="sdpi-item">
+            <div class="sdpi-item-label">Available MIDI Devices</div>
+            <textarea class="sdpi-item-value sdProperty" value="" id="availableMidiDevices" disabled>
         </div>
     </div>
 </body>
