@@ -10,7 +10,7 @@
           "FontSize": "12"
         }
       ],
-      "SupportedInMultiActions": false,
+      "SupportedInMultiActions": true,
       "Tooltip": "Switch your kit with a press of a button!",
       "UUID": "DrumKitSwitcher.pluginaction",
       "PropertyInspectorPath": "PropertyInspector/PluginActionPI.html"
